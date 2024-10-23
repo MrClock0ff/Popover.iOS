@@ -1,7 +1,7 @@
 namespace Popover.iOS.Test;
 
 [Register("AppDelegate")]
-public class AppDelegate : UIApplicationDelegate
+public class AppDelegate : UIApplicationDelegate, IUIPopoverPresentationControllerDelegate
 {
 	public override UIWindow? Window { get; set; }
 
@@ -78,14 +78,22 @@ public class AppDelegate : UIApplicationDelegate
 			ppc.SourceView = sourceView;
 			ppc.SourceRect = sourceView.Frame;
 			ppc.PermittedArrowDirections = UIPopoverArrowDirection.Any;
-			ppc.BackgroundColor = UIColor.Clear;
+			//ppc.BackgroundColor = UIColor.Clear;
 
 			if (isCustom)
 			{
 				ppc.PopoverBackgroundViewType = typeof(PopoverBackgroundView);
 			}
+
+			//ppc.Delegate = this;
 		}
 
 		Window?.RootViewController?.PresentViewController(vc, true, null);
+	}
+
+	[Export("prepareForPopoverPresentation:")]
+	public void PrepareForPopoverPresentation(UIPopoverPresentationController popover)
+	{
+	
 	}
 }
